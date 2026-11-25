@@ -1,15 +1,25 @@
+<section id="server_response_section">
+  <p id="server_response" style="text-wrap: auto; overflow-wrap: break-word;"></p>
+</section>
 <section id="login_form_section" style="margin-top: 10px;">
       
-      <form id="login_form" method="post" style="margin: 10px;">
+     <section id="login_form">
         <div id="login_form_input_div">
-          <div id="login_form_input_div_email_div" style=" display: flex; flex-direction: column">
-            <label for="login_form_email_input">البَرِيدُ الإِلِكترُونِيُّ</label>
-            <input id="login_form_email_input" type="email" name="email" required style="max-width: 50%;"/>
-            <input type="submit" value=" تَسجِيلُ الدُّخُولِ " style="max-width: 30%;">
-          </div>        
+          <div id="login_form_input_div_email_div">
+            <label for="login_form_email_input">البَرِيدُ الإِلِكترُونِي</label>
+            <input id="login_form_email_input" type="email" name="email" required />
+          </div>
+          <div id="login_form_input_div_password_div">
+            <label for="login_form_password_input">كَلِمَةُ المُرورِ</label>
+            <input id="login_form_password_input" type="password" name="password" required />
+          </div>          
         </div>
-        
-      </form>
+        <div id="login_form_submit_button_div">
+          <button id="login_form_submit_button">
+           إِنشَاءُ الحِسَابِ
+          </button>
+        </div>
+      </section>
       
     </section>
 
@@ -23,6 +33,7 @@
     </nav>
     
   </main>
+ <script src="/js/login.js"></script>
 </body>
 
 </html>

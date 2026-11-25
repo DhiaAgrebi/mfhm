@@ -52,3 +52,18 @@ f"Content-Length: { len( register_js ) }\r\n"
 
 appropriate_http_header_for_register_js = appropriate_http_header_for_register_js.encode('utf-8')
 register_js = appropriate_http_header_for_register_js + register_js
+
+login_js = js_directory / "login.js"
+login_js = login_js.read_text(encoding='utf-8')
+login_js = login_js.encode('utf-8')
+
+appropriate_http_header_for_login_js = (
+"HTTP/1.1 200 OK\r\n"
+"Content-Type: application/javascript\r\n"
+f"Content-Length: { len( login_js ) }\r\n"
+"Connection: close\r\n"
+"\r\n"
+)
+
+appropriate_http_header_for_login_js = appropriate_http_header_for_login_js.encode('utf-8')
+login_js = appropriate_http_header_for_login_js + login_js

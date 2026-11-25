@@ -21,13 +21,16 @@ from parsing_and_routing_functions import parse_incoming_then_respond
 from en import en_print_dict
 
 
+from termcolor import colored
+
 async def init_server():
     await init_pool()
     try:
         server = await start_server(parse_incoming_then_respond, ip_constant, server_port)
-        print(en_print_dict["server_is_operating"])
-        print(en_print_dict["lan_ip_of_server"], lan_ip_address)
-        print(en_print_dict["port_of_server"], server_port)
+
+        print(colored(en_print_dict['server_is_operating'], "green") )
+        print(colored(en_print_dict['lan_ip_of_server'], "blue"), lan_ip_address)
+        print(colored(en_print_dict['port_of_server'], "blue"), server_port)
 
         async with server:
             await server.serve_forever()

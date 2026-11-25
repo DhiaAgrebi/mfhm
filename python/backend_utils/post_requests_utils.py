@@ -16,7 +16,7 @@ def hash_password(body_as_a_dict):
     
 import json
 
-def append_header_to_body_then_return_post_response(body):
+def append_header_to_body_then_return_post_response(body, special_headers = None):
     header = (
         "HTTP/1.1 200 OK\r\n"
         "Content-Type: application/json; charset=utf-8\r\n"
@@ -25,5 +25,21 @@ def append_header_to_body_then_return_post_response(body):
 
     body_bytes = json.dumps(body).encode("utf-8")
     updated_header = header.replace("{length}", str(len(body_bytes))).encode("utf-8")
+    
+    if special_headers:
+        for special_header in special_headers:
+            special_header = special_header.encode("utf-8")
+            updated_headder = updated_header + special_header
 
     return updated_header + body_bytes
+
+def validate_auth(session_token):
+    pass
+
+
+    
+def verify_password(plain_password, stored_hash):
+    return bcrypt.checkpw(
+        plain_password.encode("utf-8"),
+        stored_hash.encode("utf-8"),
+    )

@@ -1,4 +1,5 @@
-document.getElementById('register_form').addEventListener('submit', async function(event) {
+serverResponseElement = document.getElementById('server_response')
+document.getElementById("register_form_submit_button").addEventListener('click', async function(event) {
     
     event.preventDefault();
     
@@ -22,7 +23,8 @@ document.getElementById('register_form').addEventListener('submit', async functi
         }
 
         const result = await response.json();
-        console.log("Server response:", result);
+        serverResponseElement.innerText = JSON.stringify(result, null, 2);
+        
         
 
     } catch (error) {

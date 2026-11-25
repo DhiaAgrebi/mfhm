@@ -57,4 +57,4 @@ function updateDateTime() {
 
 // التشغيل الفوري والتحديث كل دقيقة
 updateDateTime();
-setInterval(updateDateTime, 60000);
+setInterval(updateDateTime, 20000);

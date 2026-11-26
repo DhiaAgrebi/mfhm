@@ -17,14 +17,20 @@ from http_requests_functions import break_down_incoming, process_post_request
 from termcolor import colored
 
 async def parse_incoming_then_respond(stream_reader, stream_writer):
-    incoming = b""
-    while True:
-        chunk = await stream_reader.read(4096)
-        if not chunk:
-            break
-        incoming += chunk
-    incoming_as_str = incoming.decode("utf-8")
+    header_bytes = await stream_reader.readuntil(b"\r\n\r\n")
+    headers_text = header_bytes.decode("utf-8", errors="replace")
 
+    content_length = 0
+    for line in headers_text.split("\r\n")[1:]:
+        if line.lower().startswith("content-length:"):
+            try:
+                content_length = int(line.split(":", 1)[1].strip())
+            except ValueError:
+                content_length = 0
+            break
+
+    body_bytes = await stream_reader.readexactly(content_length) if content_length > 0 else b""
+    incoming_as_str = headers_text + body_bytes.decode("utf-8", errors="replace")
     print(colored(f"{'#' * 10} Begin parse_incoming_then_respond {'#' * 10}", "blue"))
     incoming_broken_as_dict = break_down_incoming(incoming_as_str)
     

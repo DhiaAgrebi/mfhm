@@ -17,7 +17,12 @@ from http_requests_functions import break_down_incoming, process_post_request
 from termcolor import colored
 
 async def parse_incoming_then_respond(stream_reader, stream_writer):
-    incoming = await stream_reader.read(1024)  # type bytes
+    incoming = b""
+    while True:
+        chunk = await stream_reader.read(4096)
+        if not chunk:
+            break
+        incoming += chunk
     incoming_as_str = incoming.decode("utf-8")
 
     print(colored(f"{'#' * 10} Begin parse_incoming_then_respond {'#' * 10}", "blue"))

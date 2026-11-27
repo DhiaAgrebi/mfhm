@@ -46,7 +46,7 @@ def break_down_incoming(incoming_as_str):
             type_of_static_file = "html"
             static_file = "index.html"
 
-        elif uri and ("js" in uri or "html" in uri):
+        elif uri and ("js" in uri or "html" in uri or "css" in uri):
             path_into_its_parts = uri.strip("/").split("/", 1)
             type_of_static_file = path_into_its_parts[0]
             static_file = (

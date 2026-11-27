@@ -12,6 +12,10 @@ from disk_to_ram_operations.prepare_js_files_for_service import (
     login_js,
 )
 
+from disk_to_ram_operations.prepare_css_files_for_service import (
+    style_css,
+)
+
 
 from http_requests_functions import break_down_incoming, process_post_request
 from termcolor import colored
@@ -78,6 +82,9 @@ def return_file_if_found(type_of_static_file, static_file):
             "register.js": register_js,
             "login.js": login_js,
         },
+        "css": {
+            "style.css": style_css,
+                },
     }
 
     if type_of_static_file is None:

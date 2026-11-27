@@ -192,7 +192,7 @@ async def process_post_request(incoming_broken_as_dict):
                 },
                     "message":"You have been authed",
             }
-            cookie_header = f"Set-Cookie: session_token={session_token}; HttpOnly; Path=/; SameSite=LAX"
+            cookie_header = f"Set-Cookie: session_token={session_token}; HttpOnly; Path=/; SameSite=Lax"
             return await asyncio.to_thread(
                 append_header_to_body_then_return_post_response,
                 serialized_user, special_headers=[cookie_header]

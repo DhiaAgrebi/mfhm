@@ -29,12 +29,9 @@ def append_header_to_body_then_return_post_response(body, special_headers = None
     if special_headers:
         for special_header in special_headers:
             special_header = special_header.encode("utf-8")
-            updated_headder = updated_header + special_header
+            updated_header = updated_header + special_header
 
     return updated_header + body_bytes
-
-def validate_auth(session_token):
-    pass
 
 
     

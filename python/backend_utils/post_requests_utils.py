@@ -24,12 +24,14 @@ def append_header_to_body_then_return_post_response(body, special_headers = None
     )
 
     body_bytes = json.dumps(body).encode("utf-8")
-    updated_header = header.replace("{length}", str(len(body_bytes))).encode("utf-8")
     
     if special_headers:
         for special_header in special_headers:
             special_header = special_header.encode("utf-8")
-            updated_header = updated_header + special_header
+            header = header + special_header
+
+    updated_header = header.replace("{length}", str(len(body_bytes))).encode("utf-8")
+
 
     return updated_header + body_bytes
 

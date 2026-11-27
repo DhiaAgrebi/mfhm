@@ -27,7 +27,6 @@ def append_header_to_body_then_return_post_response(body, special_headers = None
     
     if special_headers:
         for special_header in special_headers:
-            special_header = special_header.encode("utf-8")
             header = header + special_header
 
     updated_header = header.replace("{length}", str(len(body_bytes))).encode("utf-8")

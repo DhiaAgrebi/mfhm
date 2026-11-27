@@ -16,9 +16,10 @@ from disk_to_ram_operations.prepare_css_files_for_service import (
     style_css,
 )
 
-
+from backend_utils.db_utils import session_token_is_valid
 from http_requests_functions import break_down_incoming, process_post_request
 from termcolor import colored
+
 
 async def parse_incoming_then_respond(stream_reader, stream_writer):
     header_bytes = await stream_reader.readuntil(b"\r\n\r\n")
@@ -37,14 +38,16 @@ async def parse_incoming_then_respond(stream_reader, stream_writer):
     incoming_as_str = headers_text + body_bytes.decode("utf-8", errors="replace")
     print(colored(f"{'#' * 10} Begin parse_incoming_then_respond {'#' * 10}", "blue"))
     incoming_broken_as_dict = break_down_incoming(incoming_as_str)
-    
+
     if incoming_broken_as_dict is None:
         print(colored(f"{'#' * 5 }", "yellow") , "method_type is None, dropping connection")
         stream_writer.close()
         await stream_writer.wait_closed()
         return
-    
+
     method_type = incoming_broken_as_dict["method_type"]
+    session_token = incoming_broken_as_dict.get("session_token")
+    user_is_authed = await session_token_is_valid(session_token)
 
     response = None
     if method_type == "get":
@@ -58,7 +61,7 @@ async def parse_incoming_then_respond(stream_reader, stream_writer):
 
     if isinstance(response, str):
         response = response.encode("utf-8")
-        
+
     stream_writer.write(response)
     await stream_writer.drain()
 
@@ -66,7 +69,6 @@ async def parse_incoming_then_respond(stream_reader, stream_writer):
     await stream_writer.wait_closed()
     print(colored(f"{'#' * 10} End of parse_incoming_then_respond {'#' * 10}", 'blue'))
     print()
-
 
 
 def return_file_if_found(type_of_static_file, static_file):
@@ -84,7 +86,7 @@ def return_file_if_found(type_of_static_file, static_file):
         },
         "css": {
             "style.css": style_css,
-                },
+        },
     }
 
     if type_of_static_file is None:
@@ -99,4 +101,3 @@ def return_file_if_found(type_of_static_file, static_file):
             )
 
     return to_be_returned
-

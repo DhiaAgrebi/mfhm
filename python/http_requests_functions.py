@@ -58,6 +58,7 @@ def break_down_incoming(incoming_as_str):
             "uri": uri,
             "type_of_static_file": type_of_static_file,
             "static_file": static_file,
+            "session_token": session_token,
         }
 
     elif method_type == "post":
@@ -67,6 +68,7 @@ def break_down_incoming(incoming_as_str):
             "method_type": method_type,
             "uri": uri,
             "body": body,
+            "session_token": session_token,
         }
 
     print(colored(f"{'#' * 5}, break_down_incoming's to_be_returned is:", "yellow"))

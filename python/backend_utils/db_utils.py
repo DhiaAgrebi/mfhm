@@ -33,3 +33,14 @@ def get_pool() -> asyncpg.Pool:
     if _pool is None:
         raise RuntimeError("Database pool has not been initialized. Call await init_pool() first.")
     return _pool
+
+async def session_token_is_valid(session_token: str | None) -> bool:
+    if session_token is None:
+        return False
+    pool = get_pool()
+    async with pool.acquire() as connection:
+        row = await connection.fetchrow(
+            "SELECT 1 FROM sessions WHERE token = $1",
+            session_token,
+        )
+    return row is not None

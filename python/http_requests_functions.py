@@ -71,8 +71,6 @@ def break_down_incoming(incoming_as_str):
             "session_token": session_token,
         }
 
-    print(colored(f"{'#' * 5}, break_down_incoming's to_be_returned is:", "yellow"))
-    print(to_be_returned)
     print(colored(f"{'#' * 10} End of break_down_incoming def, {'#' * 10}", "yellow"))
     
     return to_be_returned
@@ -141,12 +139,6 @@ async def process_post_request(incoming_broken_as_dict):
 
             user_email = body_as_a_dict["user_email"]
             user_password = body_as_a_dict["user_password"]
-            print("÷" * 20)
-            print("÷" * 20)
-            print("User email:", user_email)
-            print("User password:", user_password)
-            print("÷" * 20)
-            print("÷" * 20)
 
             async with get_pool().acquire() as conn:
                 user = await conn.fetchrow(

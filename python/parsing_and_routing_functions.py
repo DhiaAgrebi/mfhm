@@ -35,7 +35,9 @@ async def parse_incoming_then_respond(stream_reader, stream_writer):
             break
 
     body_bytes = await stream_reader.readexactly(content_length) if content_length > 0 else b""
+
     incoming_as_str = headers_text + body_bytes.decode("utf-8", errors="replace")
+
     print(colored(f"{'#' * 10} Begin parse_incoming_then_respond {'#' * 10}", "blue"))
     incoming_broken_as_dict = break_down_incoming(incoming_as_str)
 
@@ -48,6 +50,9 @@ async def parse_incoming_then_respond(stream_reader, stream_writer):
     method_type = incoming_broken_as_dict["method_type"]
     session_token = incoming_broken_as_dict.get("session_token")
     user_is_authed = await session_token_is_valid(session_token)
+    print("!"*20)
+    print("from parsing and routing line 54.\nsession_token", session_token)
+    print("from parsing and routing line 55.\nUser is authed", user_is_authed)
 
     response = None
     if method_type == "get":

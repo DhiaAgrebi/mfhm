@@ -37,7 +37,8 @@ def append_header_to_body_then_return_post_response(body, special_headers = None
 
     
 def verify_password(plain_password, stored_hash):
-    return bcrypt.checkpw(
+   print("from backed_utils.post_resquests_utils, line 40") 
+   return bcrypt.checkpw(
         plain_password.encode("utf-8"),
         stored_hash.encode("utf-8"),
     )

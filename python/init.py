@@ -1,6 +1,10 @@
 lan_ip_address = None
 ip_constant = "127.0.0.1"
 
+from logging_utils.logging_script import logger
+
+logger.info("server is about to start")
+
 from socket import socket, AF_INET, SOCK_DGRAM
 try:
     device_socket = socket(AF_INET, SOCK_DGRAM)
@@ -29,8 +33,7 @@ async def init_server():
         server = await start_server(parse_incoming_then_respond, ip_constant, server_port)
 
         print(colored(en_print_dict['server_is_operating'], "green") )
-        print(colored(en_print_dict['lan_ip_of_server'], "blue"), lan_ip_address)
-        print(colored(en_print_dict['port_of_server'], "blue"), server_port)
+        print(colored(en_print_dict['lan_ip_of_server'], "blue"), f"{lan_ip_address}:{server_port}")
 
         async with server:
             await server.serve_forever()

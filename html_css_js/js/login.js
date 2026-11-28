@@ -1,4 +1,5 @@
 serverResponseElement = document.getElementById('server_response')
+buttonClicked = document.getElementById('button_clicked')
 document.getElementById("login_form_submit_button").addEventListener('click', async function(event) {
     
     event.preventDefault();
@@ -19,11 +20,12 @@ document.getElementById("login_form_submit_button").addEventListener('click', as
         });
 
         if (!response.ok) {
+            buttonClicked.innerText = response.status;
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
-
+        buttonClicked.innerText = "button clicked";
         const result = await response.json();
-        serverResponseElement.innerText = JSON.stringify(result, null, 2);
+        buttonClicked.innerText = "response awaited";
         
         
 
@@ -31,5 +33,3 @@ document.getElementById("login_form_submit_button").addEventListener('click', as
         console.error("Authentication failed:", error);
     }
 });
-
-

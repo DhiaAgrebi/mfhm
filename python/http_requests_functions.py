@@ -16,13 +16,13 @@ def break_down_incoming(incoming_as_str):
     first_line, _, rest = incoming_as_str.partition("\r\n")
     headers_part, has_body, body_part = rest.partition("\r\n\r\n")
     body = body_part if has_body else None
-    print("this is first line:", first_line)
+    print('#'*5, "line 19 in http_requests_functions (break_down_incoming)")
+    print("method, uri, as first line :", first_line)
     if not first_line:
         return
 
     session_token = None
     for line in headers_part.splitlines():
-        print("Searching for cookie line.")
         if line.lower().startswith("cookie:"):
             print("cookie line found\ncookie line:", line)
             for pair in line.split(":", 1)[1].split(";"):
@@ -30,6 +30,7 @@ def break_down_incoming(incoming_as_str):
                 if key.strip() == "session_token":
                     session_token = value.strip()
                     break
+        print("Cookie line not found")
 
 
     
@@ -74,8 +75,7 @@ def break_down_incoming(incoming_as_str):
             "body": body,
             "session_token": session_token,
         }
-
-    print(colored(f"{'#' * 10} End of break_down_incoming def, {'#' * 10}", "yellow"))
+    print("break_down_incoming about to return")
     
     return to_be_returned
 

@@ -16,25 +16,26 @@ def hash_password(body_as_a_dict):
     
 import json
 
-def append_header_to_body_then_return_post_response(body, special_headers = None):
-    header = (
-        "HTTP/1.1 200 OK\r\n"
-        "Content-Type: application/json; charset=utf-8\r\n"
-        "Content-Length: {length}\r\n\r\n"
-    )
-
+def append_header_to_body_then_return_post_response(body, special_headers=None):
     body_bytes = json.dumps(body).encode("utf-8")
-    
+
+    # Build the header block WITHOUT the blank line first
+    header_lines = [
+        "HTTP/1.1 200 OK",
+        "Content-Type: application/json; charset=utf-8",
+        f"Content-Length: {len(body_bytes)}",
+    ]
+
+    # Add each special header as its own line, WITHOUT its own \r\n
     if special_headers:
-        for special_header in special_headers:
-            header = header + special_header
+        for h in special_headers:
+            # Strip any stray trailing CRLF so we control it here
+            header_lines.append(h.rstrip("\r\n"))
 
-    updated_header = header.replace("{length}", str(len(body_bytes))).encode("utf-8")
+    # Join with CRLF, then the blank line that terminates the header block
+    header_block = "\r\n".join(header_lines) + "\r\n\r\n"
 
-
-    return updated_header + body_bytes
-
-
+    return header_block.encode("utf-8") + body_bytes
     
 def verify_password(plain_password, stored_hash):
    print("÷"*20)
